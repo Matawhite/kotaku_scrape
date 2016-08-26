@@ -10,7 +10,7 @@ mongoose.connect('mongodb://localhost/kotaku');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Test' });
+  res.render('index');
 });
 
 /* scrape http://kotaku.com/ */
@@ -38,7 +38,7 @@ router.get('/scrape', function(req, res){
 				  }
 				});
       })
-      res.send('All your base are belong to us')
+      res.redirect('/');
     })
 });
 
@@ -57,6 +57,41 @@ router.get('/articles', function(req, res){
 			res.json(doc);
 		}
 	});
+});
+
+router.post('/comment', function(req, res){
+  var comment = req.body;
+  console.log(comment.updateId, comment.newComment);
+
+  Article.findOneAndUpdate({'_id': comment.updateId}, {'comments':comment.newComment})
+			// execute the above query
+			.exec(function(err, doc){
+				// log any errors
+				if (err){
+					console.log(err);
+				} else {
+          console.log('success');
+						//redirect to index
+					res.redirect('/');
+				}
+		})
+});
+
+router.post('/delete', function(req, res){
+  var deleteComment = req.body;
+
+  Article.findOneAndUpdate({'_id': deleteComment.updateId}, {'comments': ""})
+			// execute the above query
+			.exec(function(err, doc){
+				// log any errors
+				if (err){
+					console.log(err);
+				} else {
+          console.log('deleted');
+					//redirect to index
+					res.redirect('/');
+				}
+		})
 });
 
 

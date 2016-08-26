@@ -18,7 +18,9 @@ var ArticleSchema = new Schema({
     required:true,
     unique: true,
     dropDups: true
-  }
+  },
+  //coment not required
+  comments: String
 });
 
 // Create the Article model with the ArticleSchema

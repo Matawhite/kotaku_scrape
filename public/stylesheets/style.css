@@ -6,3 +6,11 @@ body {
 a {
   color: #00B7FF;
 }
+
+#refresh {
+  margin: 10px;
+}
+
+.deletebtn{
+  margin: 5px;
+}
